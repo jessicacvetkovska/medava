@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 public class Transporter {
-    private List<Object> goods;
+    private List<Shippable> goods;
     private String mTransporterName;
     private double mLowTemperature, mHighTemperature;
 
@@ -13,7 +13,7 @@ public class Transporter {
     }
     
     {
-        goods = new ArrayList<Object>();
+        goods = new ArrayList<Shippable>();
     }
 
     public void ship() {
@@ -26,7 +26,8 @@ public class Transporter {
         mHighTemperature = highTemp;
     }
 
-        public boolean load(Object itemToLoad) {
+    /*
+    public boolean load(Object itemToLoad) {
         try {
             Method isTemperatureRangeAcceptableMethod = itemToLoad.getClass().getMethod("isTemperatureRangeAcceptable",
                     Double.class, Double.class);
@@ -45,6 +46,19 @@ public class Transporter {
     public Object unload() {
         return goods.remove(0);
     }
+    */
+
+    public Shippable unload() {
+        return goods.remove(0);
+    }
+
+    public boolean load(Shippable itemToLoad) {
+        if (itemToLoad.isTemperatureRangeAcceptable(mLowTemperature, mHighTemperature)) {
+            return goods.add(itemToLoad);
+        }
+        return false;
+    }
+
     public boolean isEmpty() {
         return goods.isEmpty();
     }
