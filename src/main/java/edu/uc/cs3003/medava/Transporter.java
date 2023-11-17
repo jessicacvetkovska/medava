@@ -1,8 +1,10 @@
 package edu.uc.cs3003.medava;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 public class Transporter {
-    private List<Medicine> goods;
+    private List<Object> goods;
     private String mTransporterName;
     private double mLowTemperature, mHighTemperature;
 
@@ -11,7 +13,7 @@ public class Transporter {
     }
     
     {
-        goods = new ArrayList<Medicine>();
+        goods = new ArrayList<Object>();
     }
 
     public void ship() {
@@ -24,16 +26,23 @@ public class Transporter {
         mHighTemperature = highTemp;
     }
 
-    public boolean load(Medicine itemToLoad) {
-        if (itemToLoad.isTemperatureRangeAcceptable(mLowTemperature, mHighTemperature)) {
-            System.out.println(String.format("Adding a %s to the transporter.", itemToLoad.getMedicineName()));
-            goods.add(itemToLoad);
-            return true;
+        public boolean load(Object itemToLoad) {
+        try {
+            Method isTemperatureRangeAcceptableMethod = itemToLoad.getClass().getMethod("isTemperatureRangeAcceptable",
+                    Double.class, Double.class);
+            boolean resultOfMethodCall = (boolean) isTemperatureRangeAcceptableMethod.invoke(itemToLoad,
+                    Double.valueOf(mLowTemperature), Double.valueOf(mHighTemperature));
+            if (resultOfMethodCall) {
+                goods.add(itemToLoad);
+            }
+            return resultOfMethodCall;
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
+                | InvocationTargetException e) {
+            return false;
         }
-        return false;
     }
 
-    public Medicine unload() {
+    public Object unload() {
         return goods.remove(0);
     }
     public boolean isEmpty() {
