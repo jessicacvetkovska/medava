@@ -1,0 +1,11 @@
+Why are several different installs needed to be able to program in Java, as opposed to one large install that has everything you need in there?
+
+Similarly, what is the Java Virtual Machine? Is it similar to an OS VM, like an Ubuntu VM, for instance?
+
+Why would Java need an SDK? It seems to be one of the only programming languages to require it, as most mainstream SDKs are for OS development or game development.
+
+Does Java have any languages to which it is similar syntactically/functionally? The main example I'm thinking of here is the C family of languages, which vary in functionality and syntax, but are still very similar to each other.
+
+Would it be possible to do all of this in one file, or at least have a smaller number of files? At any rate, splitting this up is probably better for readability, as 12 short files reads better than one massive file.
+
+Do other programming languages have the annotations (like @Override)? This is a genuinely useful feature!
